@@ -20,11 +20,9 @@ export default class CreateForm extends React.Component {
         <Form
           schema={this.props.schema}
           formData={defaultValues}
-          onChange={console.log("changed")}
           onSubmit={({ formData }) => {
             this.props.onSaveHandler(formData);
           }}
-          onError={console.log("errors")}
         />
       );
     } else return null;

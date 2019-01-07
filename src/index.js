@@ -9,7 +9,6 @@ import * as API from "./libs/api";
 import SideMenu from "./components/SideMenu";
 import CategoryTable from "./components/CategoryTable";
 import CreateForm from "./components/CreateForm";
-import EditForm from "./components/EditForm";
 
 class App extends React.Component {
   constructor(props) {
@@ -57,9 +56,8 @@ class App extends React.Component {
   _getCategorySchema = () => {
     this.setState({ isLoading: true });
     API.getCategorySchema(this.state.selectedCategory).then(schema => {
-      schema = JSON.parse(schema);
       this.setState({
-        selectedSchema: schema,
+        selectedSchema: schema.schema,
         response: ""
       });
 
@@ -131,6 +129,8 @@ class App extends React.Component {
                   </Button>
                 )}
               </h1>
+                { this.state.selectedCategory && <p style={{ fontSize: 12 }}>*Developers can access the data at the endpoint <a href={`${window.location.origin}/json/${this.state.selectedCateogry}`}><i>here</i></a>.</p> }
+                { !this.state.selectedCategory && <p style={{ fontSize: 12 }}>*Select a table to view the data stored in it.</p> }
               <hr className="my-2" />
               {this.state.response && (
                 <Alert color="success">{this.state.response}</Alert>

@@ -1,6 +1,7 @@
-const BASE_URL = (process.env.HOST) ? process.env.HOST : "https://json-cms--seeya.repl.co";
+//const BASE_URL = "http://localhost:3000"; //window.location.origin; 
+const BASE_URL = window.location.origin; 
 const IMAGE_HOST = `${BASE_URL}/uploads`;
-console.log(process.env);
+
 const objectToFormData = function(object) {
   let formData = new FormData();
   for (let k in object) {
@@ -51,6 +52,7 @@ const getCategorySchema = function(category) {
   });
 };
 
+
 const createItem = function(category, data) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE_URL}/create/${category}`, {
@@ -100,6 +102,23 @@ const deleteItem = function(category, index) {
   });
 };
 
+const uploadWebsite = function(data) {
+  return new Promise((resolve, reject) => {
+    fetch(`${BASE_URL}/admin/website`, {
+      method: "POST",
+      body: data
+    })
+      .then(async res => {
+        resolve(await res.json());
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+
+
 module.exports = {
   IMAGE_HOST,
   getCategories,
@@ -107,5 +126,6 @@ module.exports = {
   getCategorySchema,
   createItem,
   editItem,
-  deleteItem
+  deleteItem,
+  uploadWebsite
 };
